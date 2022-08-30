@@ -4,8 +4,10 @@ from django.views import generic
 from datetime import datetime
 from  .return_top_customer import return_top_customer_with_items
 
+from .forms import FileFrom
+
 def start_page(request):
-    return render(request, 'proc_deals/start.html', {'start': ''})
+    return render(request, 'proc_deals/start.html', {'start': '', 'form': FileFrom})
 
 class ResultsView(generic.ListView):
     model = Client
@@ -17,8 +19,7 @@ def result(request):
     Deal.objects.all().delete()
     Client.objects.all().delete()
 
-    deals_file_csv = request.FILES['file_csv']
-
+    deals_file_csv = request.FILES['file']
 
 
     for line in deals_file_csv:
@@ -34,7 +35,8 @@ def result(request):
         client.spent_money = customer['total_sum']
         client.save()
 
-    return render(request, 'proc_deals/result.html', {'clients': Client.objects.all()})
+    return render(request, 'proc_deals/start.html', {'clients': Client.objects.all(), 'form': FileFrom})
+
 
 
 

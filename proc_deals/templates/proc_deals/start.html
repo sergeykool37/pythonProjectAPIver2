@@ -6,9 +6,19 @@
  </head>
  <body>
   <form enctype="multipart/form-data" action="{% url 'proc_deals:result' %}" method="post">
-   <p><input type="file" name="file_csv" value="file_csv">
-     {% csrf_token %}.
+   <p>{{form}}
+     {% csrf_token %}
    <input type="submit" value="Отправить"></p>
   </form>
+
+  {% for client in clients %}
+        <div class="post">
+
+            <p>{{ client.username }}</p>
+                 <p>{{ client.gems }}</p>
+                 <p>{{ client.spent_money }}</p>
+            <p>---------------------------</p>
+        </div>
+    {% endfor %}
  </body>
 </html>
